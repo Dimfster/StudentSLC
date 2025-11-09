@@ -10,7 +10,7 @@ namespace StudentSLC.Models
     {
         [Key] 
         [Column("id")]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();  // uuid в PostgreSQL → Guid в C#
 
         [Required] 
         [Column("first_name")]
@@ -27,7 +27,13 @@ namespace StudentSLC.Models
         [Column("role")]
         public string Role { get; set; } = null!;
 
-        // 🔗 связь многие-ко-многим
+        // связь М:М с Roles
+        public ICollection<Role> Roles { get; set; } = new List<Role>();
+
+        // связь М:М с Groups
         public ICollection<Group> Groups { get; set; } = new List<Group>();
+
+        // связь 1:1 с Participant
+        public Participant Participant { get; set; } = null!;
     }
 }

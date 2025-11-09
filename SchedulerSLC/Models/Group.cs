@@ -11,13 +11,16 @@ namespace StudentSLC.Models
     {
         [Key]
         [Column("id")]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid(); // uuid в PostgreSQL → Guid в C#
 
         [Required]
         [Column("name")]
         public string Name { get; set; } = null!;
         
-        // 🔗 связь многие-ко-многим
+        // связь М:М с Users
         public ICollection<User> Users { get; set; } = new List<User>();
+
+        // связь 1:1 с Participant
+        public Participant Participant { get; set; } = null!;
     }
 }

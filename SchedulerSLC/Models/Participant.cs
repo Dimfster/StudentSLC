@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,14 @@ namespace StudentSLC.Models
         [Column("type")]
         public string Type { get; set; } = null!;
 
-        public ICollection<Event> Events { get; set; } = new List<Event>();
+        public ICollection<Event> EventsAsParticipant { get; set; } = new List<Event>();
+
+        public ICollection<Event> EventsAsKeyHolder { get; set; } = new List<Event>();
+
+        // связь 1:1 с User
+        public User? User { get; set; } 
+
+        // связь 1:1 с Group
+        public Group? Group { get; set; } 
     }
 }
