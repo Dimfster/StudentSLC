@@ -20,10 +20,16 @@ namespace StudentSLC.Models
         public DateTime EndTime { get; set; }
 
         [Required]
-        [Column("place")]
-        public string Place { get; set; } = null!;
+        [Column("room")]
+        public string RoomName { get; set; } = null!;  // FK → Rooms(name)
 
+        // навигационное свойство 1:M
+        public Room Room { get; set; } = null!;
+
+        // связь М:М с Participants
         public ICollection<Participant> Participants { get; set; } = new List<Participant>();
+
+        // связь М:М с KeyHolders
         public ICollection<Participant> KeyHolders { get; set; } = new List<Participant>();
     }
 }

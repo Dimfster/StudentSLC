@@ -8,9 +8,9 @@ namespace StudentSLC.Data
     {
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Group> Groups { get; set; } = null!;
-
         public DbSet<Participant> Participants { get; set; } = null!;
         public DbSet<Event> Events { get; set; } = null!;
+        public DbSet<Room> Rooms { get; set; } = null!;
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -58,6 +58,14 @@ namespace StudentSLC.Data
                 .WithOne(p => p.Group)
                 .HasForeignKey<Group>(u => u.Id)
                 .OnDelete(DeleteBehavior.Cascade);
-        }
+
+            // Room - Events 1:M
+            modelBuilder.Entity<Event>()
+                .HasOne(e => e.Room)
+                .WithMany(r => r.Events)
+                .HasForeignKey(e => e.RoomName)   // FK → Rooms(name)
+                .HasPrincipalKey(r => r.Name)     // PK → Rooms(name)
+                .OnDelete(DeleteBehavior.Restrict);
+            }
     }
 }
