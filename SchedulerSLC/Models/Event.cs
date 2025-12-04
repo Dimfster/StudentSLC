@@ -8,6 +8,9 @@ namespace StudentSLC.Models
     public class Event
     {
         [Key]
+        [Column("id")]
+        public Guid Id { get; set; } = Guid.NewGuid();
+        
         [Column("name")]
         public string Name { get; set; } = null!;
 

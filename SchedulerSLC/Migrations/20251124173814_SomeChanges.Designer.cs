@@ -12,8 +12,8 @@ using StudentSLC.Data;
 namespace SchedulerSLC.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251118171231_AddRooms")]
-    partial class AddRooms
+    [Migration("20251124173814_SomeChanges")]
+    partial class SomeChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -187,6 +187,11 @@ namespace SchedulerSLC.Migrations
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
                     b.Property<string>("Patronymic")
                         .HasColumnType("text")
                         .HasColumnName("patronymic");
@@ -195,6 +200,10 @@ namespace SchedulerSLC.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("role");
+
+                    b.Property<int>("UserCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_code");
 
                     b.HasKey("Id");
 

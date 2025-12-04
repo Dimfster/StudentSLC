@@ -12,7 +12,7 @@ using StudentSLC.Data;
 namespace SchedulerSLC.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251109110502_InitialCreate")]
+    [Migration("20251119102100_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -95,16 +95,18 @@ namespace SchedulerSLC.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_time");
 
-                    b.Property<string>("Place")
+                    b.Property<string>("RoomName")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("place");
+                        .HasColumnName("room");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_time");
 
                     b.HasKey("Name");
+
+                    b.HasIndex("RoomName");
 
                     b.ToTable("Events");
                 });
@@ -151,6 +153,22 @@ namespace SchedulerSLC.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("StudentSLC.Models.Room", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("StudentSLC.Models.User", b =>
@@ -243,6 +261,17 @@ namespace SchedulerSLC.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("StudentSLC.Models.Event", b =>
+                {
+                    b.HasOne("StudentSLC.Models.Room", "Room")
+                        .WithMany("Events")
+                        .HasForeignKey("RoomName")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("StudentSLC.Models.Group", b =>
                 {
                     b.HasOne("StudentSLC.Models.Participant", "Participant")
@@ -270,6 +299,11 @@ namespace SchedulerSLC.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("StudentSLC.Models.Room", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

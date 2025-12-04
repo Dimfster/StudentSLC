@@ -12,20 +12,6 @@ namespace SchedulerSLC.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    name = table.Column<string>(type: "text", nullable: false),
-                    start_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    end_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    place = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.name);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Participants",
                 columns: table => new
                 {
@@ -49,51 +35,15 @@ namespace SchedulerSLC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Events_KeyHolders",
+                name: "Rooms",
                 columns: table => new
                 {
-                    EventsAsKeyHolderName = table.Column<string>(type: "text", nullable: false),
-                    KeyHoldersId = table.Column<Guid>(type: "uuid", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events_KeyHolders", x => new { x.EventsAsKeyHolderName, x.KeyHoldersId });
-                    table.ForeignKey(
-                        name: "FK_Events_KeyHolders_Events_EventsAsKeyHolderName",
-                        column: x => x.EventsAsKeyHolderName,
-                        principalTable: "Events",
-                        principalColumn: "name",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Events_KeyHolders_Participants_KeyHoldersId",
-                        column: x => x.KeyHoldersId,
-                        principalTable: "Participants",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Events_Participants",
-                columns: table => new
-                {
-                    EventsAsParticipantName = table.Column<string>(type: "text", nullable: false),
-                    ParticipantsId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events_Participants", x => new { x.EventsAsParticipantName, x.ParticipantsId });
-                    table.ForeignKey(
-                        name: "FK_Events_Participants_Events_EventsAsParticipantName",
-                        column: x => x.EventsAsParticipantName,
-                        principalTable: "Events",
-                        principalColumn: "name",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Events_Participants_Participants_ParticipantsId",
-                        column: x => x.ParticipantsId,
-                        principalTable: "Participants",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Rooms", x => x.name);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,6 +83,26 @@ namespace SchedulerSLC.Migrations
                         principalTable: "Participants",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    name = table.Column<string>(type: "text", nullable: false),
+                    start_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    end_time = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    room = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.name);
+                    table.ForeignKey(
+                        name: "FK_Events_Rooms_room",
+                        column: x => x.room,
+                        principalTable: "Rooms",
+                        principalColumn: "name",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,6 +153,59 @@ namespace SchedulerSLC.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Events_KeyHolders",
+                columns: table => new
+                {
+                    EventsAsKeyHolderName = table.Column<string>(type: "text", nullable: false),
+                    KeyHoldersId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events_KeyHolders", x => new { x.EventsAsKeyHolderName, x.KeyHoldersId });
+                    table.ForeignKey(
+                        name: "FK_Events_KeyHolders_Events_EventsAsKeyHolderName",
+                        column: x => x.EventsAsKeyHolderName,
+                        principalTable: "Events",
+                        principalColumn: "name",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Events_KeyHolders_Participants_KeyHoldersId",
+                        column: x => x.KeyHoldersId,
+                        principalTable: "Participants",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events_Participants",
+                columns: table => new
+                {
+                    EventsAsParticipantName = table.Column<string>(type: "text", nullable: false),
+                    ParticipantsId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events_Participants", x => new { x.EventsAsParticipantName, x.ParticipantsId });
+                    table.ForeignKey(
+                        name: "FK_Events_Participants_Events_EventsAsParticipantName",
+                        column: x => x.EventsAsParticipantName,
+                        principalTable: "Events",
+                        principalColumn: "name",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Events_Participants_Participants_ParticipantsId",
+                        column: x => x.ParticipantsId,
+                        principalTable: "Participants",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_room",
+                table: "Events",
+                column: "room");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Events_KeyHolders_KeyHoldersId",
                 table: "Events_KeyHolders",
@@ -230,6 +253,9 @@ namespace SchedulerSLC.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "Participants");

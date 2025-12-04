@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,6 +11,9 @@ namespace StudentSLC.Models
         [Column("id")]
         public Guid Id { get; set; } = Guid.NewGuid();  // uuid в PostgreSQL → Guid в C#
 
+        [Column("user_code")]
+        public int UserCode { get; set; }
+
         [Required] 
         [Column("first_name")]
         public string FirstName { get; set; } = null!; 
@@ -22,6 +24,10 @@ namespace StudentSLC.Models
 
         [Column("patronymic")]
         public string? Patronymic { get; set; }
+
+        [Required]
+        [Column("password_hash")]
+        public string PasswordHash { get; set; } = null!;
 
         [Required]
         [Column("role")]

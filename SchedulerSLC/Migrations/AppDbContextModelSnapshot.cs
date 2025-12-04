@@ -24,13 +24,13 @@ namespace SchedulerSLC.Migrations
 
             modelBuilder.Entity("EventParticipant", b =>
                 {
-                    b.Property<string>("EventsAsParticipantName")
-                        .HasColumnType("text");
+                    b.Property<Guid>("EventsAsParticipantId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ParticipantsId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("EventsAsParticipantName", "ParticipantsId");
+                    b.HasKey("EventsAsParticipantId", "ParticipantsId");
 
                     b.HasIndex("ParticipantsId");
 
@@ -39,13 +39,13 @@ namespace SchedulerSLC.Migrations
 
             modelBuilder.Entity("EventParticipant1", b =>
                 {
-                    b.Property<string>("EventsAsKeyHolderName")
-                        .HasColumnType("text");
+                    b.Property<Guid>("EventsAsKeyHolderId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("KeyHoldersId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("EventsAsKeyHolderName", "KeyHoldersId");
+                    b.HasKey("EventsAsKeyHolderId", "KeyHoldersId");
 
                     b.HasIndex("KeyHoldersId");
 
@@ -84,13 +84,19 @@ namespace SchedulerSLC.Migrations
 
             modelBuilder.Entity("StudentSLC.Models.Event", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_time");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<string>("RoomName")
                         .IsRequired()
@@ -101,7 +107,7 @@ namespace SchedulerSLC.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_time");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoomName");
 
@@ -184,6 +190,11 @@ namespace SchedulerSLC.Migrations
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
                     b.Property<string>("Patronymic")
                         .HasColumnType("text")
                         .HasColumnName("patronymic");
@@ -192,6 +203,10 @@ namespace SchedulerSLC.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("role");
+
+                    b.Property<int>("UserCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_code");
 
                     b.HasKey("Id");
 
@@ -202,7 +217,7 @@ namespace SchedulerSLC.Migrations
                 {
                     b.HasOne("StudentSLC.Models.Event", null)
                         .WithMany()
-                        .HasForeignKey("EventsAsParticipantName")
+                        .HasForeignKey("EventsAsParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -217,7 +232,7 @@ namespace SchedulerSLC.Migrations
                 {
                     b.HasOne("StudentSLC.Models.Event", null)
                         .WithMany()
-                        .HasForeignKey("EventsAsKeyHolderName")
+                        .HasForeignKey("EventsAsKeyHolderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
