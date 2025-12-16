@@ -1,0 +1,46 @@
+<div class="main-container">
+
+  <!-- Боковое меню -->
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <!-- SVG логотип -->
+      <svg width="32" height="32" viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="16" fill="#1976d2"/>
+        <text x="50%" y="50%" text-anchor="middle" fill="white" dy=".3em">U</text>
+      </svg>
+      <span class="university-name">Университет</span>
+    </div>
+
+    <ul class="menu">
+      <li>
+        <a routerLink="timetable" routerLinkActive="active">Timetable</a>
+      </li>
+      <!-- Можно добавить другие пункты -->
+    </ul>
+  </nav>
+
+  <!-- Основная область -->
+  <div class="content">
+    <!-- Header -->
+    <header class="header">
+      <div class="date">{{ today | date:'fullDate' }}</div>
+      <div class="group-select">
+        <label>Группа:</label>
+        <select>
+          <option>АС-22-05</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Контент страницы -->
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      Зимин Дмитрий Сергеевич АС-22-05
+    </footer>
+  </div>
+
+</div>

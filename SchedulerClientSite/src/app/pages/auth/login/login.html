@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <!-- UserCode -->
+  <div>
+    <input
+      type="number"
+      placeholder="User code"
+      formControlName="userCode"
+    />
+
+    <div class="error" *ngIf="
+      form.controls['userCode'].touched &&
+      form.controls['userCode'].hasError('required')
+    ">
+      User code обязателен
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div>
+    <input
+      type="password"
+      placeholder="Пароль"
+      formControlName="password"
+    />
+
+    <div class="error" *ngIf="
+      form.controls['password'].touched &&
+      form.controls['password'].hasError('required')
+    ">
+      Пароль обязателен
+    </div>
+  </div>
+
+  <!-- Кнопки -->
+  <div class="actions">
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Вход...' : 'Войти' }}
+    </button>
+
+    <button type="button" routerLink="/auth/register">
+      Регистрация
+    </button>
+  </div>
+
+  <!-- Ошибка формы -->
+  <div class="form-error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+</form>

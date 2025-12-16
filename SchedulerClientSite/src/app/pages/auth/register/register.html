@@ -1,0 +1,63 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Регистрация</h2>
+
+  <!-- Имя -->
+  <div>
+    <input placeholder="Имя" formControlName="firstName" />
+    <div class="error" *ngIf="
+      form.controls['firstName'].touched &&
+      form.controls['firstName'].hasError('required')
+    ">
+      Имя обязательно
+    </div>
+  </div>
+
+  <!-- Фамилия -->
+  <div>
+    <input placeholder="Фамилия" formControlName="lastName" />
+    <div class="error" *ngIf="
+      form.controls['lastName'].touched &&
+      form.controls['lastName'].hasError('required')
+    ">
+      Фамилия обязательна
+    </div>
+  </div>
+
+  <!-- Отчество -->
+  <div>
+    <input placeholder="Отчество" formControlName="patronymic" />
+  </div>
+
+  <!-- Пароль -->
+  <div>
+    <input type="password" placeholder="Пароль" formControlName="password" />
+    <div class="error" *ngIf="
+      form.controls['password'].touched &&
+      form.controls['password'].hasError('required')
+    ">
+      Пароль обязателен
+    </div>
+    <div class="error" *ngIf="
+      form.controls['password'].touched &&
+      form.controls['password'].hasError('minlength')
+    ">
+      Минимум 5 символов
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid || loading">
+    Зарегистрироваться
+  </button>
+
+  <button type="button" routerLink="/auth/login">
+    Назад
+  </button>
+
+  <div *ngIf="errorMessage" style="color: red;">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" style="color: green;">
+    {{ successMessage }}
+  </div>
+</form>

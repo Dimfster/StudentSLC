@@ -1,0 +1,17 @@
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.form-error {
+  color: #b00020;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
