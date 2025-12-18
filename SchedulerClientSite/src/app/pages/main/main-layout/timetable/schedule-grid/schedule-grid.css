@@ -1,0 +1,93 @@
+/* Верхнее меню */
+.top-menu {
+  display: flex;
+  gap: 16px; /* расстояние между пунктами */
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.menu-item:hover {
+  background: #f3f4f6;
+}
+
+/* Фильтры */
+.filters {
+  margin-bottom: 8px;
+}
+
+/* Центрирование недели */
+.week-range {
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Остальные стили расписания (оставляем как было) */
+.schedule-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 120px repeat(7, 1fr);
+  border-left: 1px solid #e5e7eb;
+  border-top: 1px solid #e5e7eb;
+  min-width: 1100px;
+  width: 100%;
+}
+
+.cell {
+  position: relative;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 110px;
+  box-sizing: border-box;
+}
+
+.header {
+  background: #f3f4f6;
+  font-weight: 600;
+  text-align: center;
+  padding: 6px;
+}
+
+.time {
+  background: #f9fafb;
+  font-size: 12px;
+  color: #555;
+  padding: 4px;
+}
+
+.event-card {
+  position: absolute;
+  inset: 6px;
+  background: #eef2ff;
+  border-left: 4px solid #4f46e5;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.event-card .title {
+  font-weight: 600;
+}
+
+.event-card .room {
+  color: #555;
+}
+
+.loading {
+  padding: 16px;
+}

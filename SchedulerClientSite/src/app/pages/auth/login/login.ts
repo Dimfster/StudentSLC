@@ -43,7 +43,7 @@ export class Login implements OnInit {
 
     this.authService.login(this.form.value).subscribe({
       next: () => {
-        this.router.navigate(['/timetable']);
+        this.router.navigate(['/main/timetable']);
       },
       error: (err: HttpErrorResponse) => {
         this.loading = false;

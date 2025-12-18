@@ -1,0 +1,19 @@
+.top-menu {
+  display: flex;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 600;
+  padding-bottom: 6px;
+  cursor: pointer;
+}
+
+.menu-item.active {
+  color: #4f46e5;
+  border-bottom: 2px solid #4f46e5;
+}

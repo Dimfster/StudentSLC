@@ -1,0 +1,25 @@
+<div *ngIf="loading" class="loading">Загрузка…</div>
+
+<div class="schedule-wrapper" *ngIf="!loading">
+  <div class="schedule-grid">
+    <!-- header -->
+    <div class="cell header"></div>
+    <div class="cell header" *ngFor="let day of weekDays">{{ day.name }}</div>
+
+    <!-- body -->
+    <ng-container *ngFor="let slot of timeSlots">
+      <div class="cell time">{{ slot.start }} – {{ slot.end }}</div>
+      <ng-container *ngFor="let day of weekDays">
+        <div class="cell">
+          <ng-container *ngIf="getEventForCell(day.index, slot) as event">
+            <div class="event-card">
+              <div class="title">{{ event.name }}</div>
+              <div class="room">{{ event.roomName }}</div>
+              <div class="teachers">{{ event.keyHolderNames.join(', ') }}</div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

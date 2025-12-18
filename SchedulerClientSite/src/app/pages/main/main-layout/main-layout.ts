@@ -10,4 +10,6 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   styleUrls: ['./main-layout.css'],
 })
 
-export class MainLayout {}
+export class MainLayout {
+  today: Date = new Date();
+}
