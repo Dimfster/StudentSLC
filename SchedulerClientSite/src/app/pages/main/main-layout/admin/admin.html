@@ -1,0 +1,24 @@
+<div class="admin-container">
+
+  <!-- Верхняя панель -->
+  <div class="admin-topbar">
+    <button
+      [class.active]="tab === 'search'"
+      (click)="tab = 'search'">
+      🔍 Поиск
+    </button>
+
+    <button
+      [class.active]="tab === 'create'"
+      (click)="tab = 'create'">
+      ➕ Создание события
+    </button>
+  </div>
+
+  <!-- Контент -->
+  <div class="admin-content">
+    <app-admin-search *ngIf="tab === 'search'"></app-admin-search>
+    <app-admin-create *ngIf="tab === 'create'"></app-admin-create>
+  </div>
+
+</div>

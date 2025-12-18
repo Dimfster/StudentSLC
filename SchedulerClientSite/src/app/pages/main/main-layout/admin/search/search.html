@@ -1,0 +1,63 @@
+<div class="admin-search">
+  <div class="filters">
+    <label><input type="radio" name="type" value="groups" [(ngModel)]="type" (change)="onTypeChange('groups')" /> Группы</label>
+    <label><input type="radio" name="type" value="teachers" [(ngModel)]="type" (change)="onTypeChange('teachers')" /> Преподаватели</label>
+    <label><input type="radio" name="type" value="rooms" [(ngModel)]="type" (change)="onTypeChange('rooms')" /> Аудитории</label>
+  </div>
+
+  <div class="cards">
+    <!-- Groups -->
+    <ng-container *ngIf="type === 'groups'">
+      <div class="card" *ngFor="let g of groups">
+        <div class="name">{{ g.name }}</div>
+        <div class="actions">
+          <button (click)="editItem(g)">✏️</button>
+          <button (click)="deleteItem(g)">🗑️</button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Teachers -->
+    <ng-container *ngIf="type === 'teachers'">
+      <div class="card" *ngFor="let t of teachers">
+        <div class="name">{{ t.firstName }} {{ t.lastName }}</div>
+        <div class="role">{{ t.role }}</div>
+        <div class="actions">
+          <button (click)="editItem(t)">✏️</button>
+          <button (click)="deleteItem(t)">🗑️</button>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Rooms -->
+    <ng-container *ngIf="type === 'rooms'">
+      <div class="card" *ngFor="let r of rooms">
+        <div class="name">{{ r.name }}</div>
+        <div class="type">{{ r.type }}</div>
+        <div class="actions">
+          <button (click)="editItem(r)">✏️</button>
+          <button (click)="deleteItem(r)">🗑️</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Редактирование -->
+  <div class="edit-panel" *ngIf="editingItem">
+    <h3>Редактировать</h3>
+    <div *ngIf="'id' in editingItem">
+      <input [(ngModel)]="editingItem.name" placeholder="Название группы" />
+    </div>
+    <div *ngIf="'userCode' in editingItem">
+      <input [(ngModel)]="editingItem.firstName" placeholder="Имя" />
+      <input [(ngModel)]="editingItem.lastName" placeholder="Фамилия" />
+      <input [(ngModel)]="editingItem.patronymic" placeholder="Отчество" />
+      <input [(ngModel)]="editingItem.role" placeholder="Роль" />
+    </div>
+    <div *ngIf="'type' in editingItem">
+      <input [(ngModel)]="editingItem.type" placeholder="Тип аудитории" />
+    </div>
+    <button (click)="saveItem()">💾 Сохранить</button>
+    <button (click)="cancelEdit()">❌ Отмена</button>
+  </div>
+</div>

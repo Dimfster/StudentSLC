@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { AuthService, User } from '../../../services/auth';
 
 @Component({
   selector: 'app-main-layout',
@@ -9,7 +10,13 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   templateUrl: './main-layout.html',
   styleUrls: ['./main-layout.css'],
 })
+export class MainLayout implements OnInit {
+  today = new Date();
+  user: User | null = null;
 
-export class MainLayout {
-  today: Date = new Date();
+  constructor(private auth: AuthService) {}
+
+  ngOnInit(): void {
+    this.user = this.auth.getUser();
+  }
 }

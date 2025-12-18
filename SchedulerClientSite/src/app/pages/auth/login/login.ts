@@ -11,6 +11,7 @@ import { ChangeDetectorRef } from '@angular/core';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
+  styleUrls: ['./login.css']
 })
 
 export class Login implements OnInit {
@@ -31,6 +32,7 @@ export class Login implements OnInit {
       password: ['', Validators.required],
     });
   }
+  
 
   submit() {
     if (this.form.invalid) {

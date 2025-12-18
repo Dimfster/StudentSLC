@@ -1,51 +1,51 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
+<div class="login-wrapper">
+  <form class="login-box" [formGroup]="form" (ngSubmit)="submit()">
 
-  <!-- UserCode -->
-  <div>
-    <input
-      type="number"
-      placeholder="User code"
-      formControlName="userCode"
-    />
+    <h2 class="title">Вход</h2>
 
-    <div class="error" *ngIf="
-      form.controls['userCode'].touched &&
-      form.controls['userCode'].hasError('required')
-    ">
-      User code обязателен
+    <div class="field">
+      <input
+        type="number"
+        placeholder="User code"
+        formControlName="userCode"
+      />
+      <div class="error" *ngIf="
+        form.controls['userCode'].touched &&
+        form.controls['userCode'].hasError('required')
+      ">
+        User code обязателен
+      </div>
     </div>
-  </div>
 
-  <!-- Password -->
-  <div>
-    <input
-      type="password"
-      placeholder="Пароль"
-      formControlName="password"
-    />
-
-    <div class="error" *ngIf="
-      form.controls['password'].touched &&
-      form.controls['password'].hasError('required')
-    ">
-      Пароль обязателен
+    <div class="field">
+      <input
+        type="password"
+        placeholder="Пароль"
+        formControlName="password"
+      />
+      <div class="error" *ngIf="
+        form.controls['password'].touched &&
+        form.controls['password'].hasError('required')
+      ">
+        Пароль обязателен
+      </div>
     </div>
-  </div>
 
-  <!-- Кнопки -->
-  <div class="actions">
-    <button type="submit" [disabled]="loading">
+    <div class="form-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+
+    <button class="primary" type="submit" [disabled]="loading">
       {{ loading ? 'Вход...' : 'Войти' }}
     </button>
 
-    <button type="button" routerLink="/auth/register">
+    <button
+      class="secondary"
+      type="button"
+      routerLink="/auth/register"
+    >
       Регистрация
     </button>
-  </div>
 
-  <!-- Ошибка формы -->
-  <div class="form-error" *ngIf="errorMessage">
-    {{ errorMessage }}
-  </div>
-
-</form>
+  </form>
+</div>

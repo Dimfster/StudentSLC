@@ -2,44 +2,95 @@
 
   <!-- Боковое меню -->
   <nav class="sidebar">
+
+    <!-- Шапка -->
     <div class="sidebar-header">
-      <!-- SVG логотип -->
-      <svg width="32" height="32" viewBox="0 0 32 32">
-        <circle cx="16" cy="16" r="16" fill="#1976d2"/>
-        <text x="50%" y="50%" text-anchor="middle" fill="white" dy=".3em">U</text>
-      </svg>
-      <span class="university-name">Университет</span>
+
+      <!-- Блок университета -->
+      <div class="university-block">
+        <svg
+          class="sidebar-logo"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-label="University logo"
+          role="img"
+        >
+          <rect
+            x="3"
+            y="4"
+            width="18"
+            height="17"
+            rx="2"
+            ry="2"
+            fill="white"
+            stroke="#1976d2"
+            stroke-width="1"
+          />
+          <path d="M3 9h18" stroke="#1976d2" stroke-width="2" />
+          <text
+            x="12"
+            y="18"
+            font-size="9"
+            font-weight="bold"
+            text-anchor="middle"
+            fill="#1976d2"
+          >
+            U
+          </text>
+        </svg>
+
+
+        <div class="university-name">
+          Университет
+        </div>
+      </div>
+
+      <!-- Блок пользователя -->
+      <div class="user-block" *ngIf="user">
+        <div class="user-name">
+          ID: {{ user.userCode }}
+        </div>
+        <div class="user-role">
+          Роль: {{ user.role }}
+        </div>
+      </div>
+
     </div>
 
+    <!-- Меню -->
     <ul class="menu">
       <li>
-        <a routerLink="timetable" routerLinkActive="active">Расписание</a>
+        <a routerLink="timetable" routerLinkActive="active">
+          Расписание
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="admin" routerLinkActive="active">
+          Панель администратора
+        </a>
       </li>
     </ul>
+
   </nav>
 
   <!-- Основная область -->
   <div class="content">
-    <!-- Header -->
+
     <header class="header">
-      <div class="date">{{ today | date:'fullDate' }}</div>
-      <div class="group-select">
-        <label>Группа:</label>
-        <select>
-          <option>Group A</option>
-        </select>
+      <div class="date">
+        {{ today | date:'fullDate' }}
       </div>
     </header>
 
-    <!-- Контент страницы -->
     <main class="page-content">
       <router-outlet></router-outlet>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
       Зимин Дмитрий Сергеевич АС-22-05
     </footer>
+
   </div>
 
 </div>

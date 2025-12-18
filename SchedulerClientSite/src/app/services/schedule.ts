@@ -10,6 +10,11 @@ export interface ScheduleEvent {
   keyHolderNames: string[];
 }
 
+export interface GroupDto {
+  id: string;
+  name: string;
+}
+
 export interface TeacherDto {
   userCode: number;
   firstName: string;
@@ -45,6 +50,12 @@ export class ScheduleService {
     const date = weekStart.toISOString().split('T')[0];
     return this.http.get<ScheduleEvent[]>(
       `${this.API}/schedule/keyholders/${teacherId}?weekStart=${date}`
+    );
+  }
+
+  getAllGroups() {
+    return this.http.get<GroupDto[]>(
+      'http://localhost:5171/api/groups/GetAllGroups'
     );
   }
 

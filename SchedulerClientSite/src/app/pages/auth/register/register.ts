@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/auth';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
+  styleUrls: ['./register.css'], 
 })
 
 export class Register implements OnInit {

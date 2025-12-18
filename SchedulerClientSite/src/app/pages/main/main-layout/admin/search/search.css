@@ -1,0 +1,32 @@
+.admin-search .filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card .actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.card button {
+  cursor: pointer;
+}

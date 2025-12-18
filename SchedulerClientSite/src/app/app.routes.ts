@@ -10,6 +10,8 @@ import { TimetableGroups } from './pages/main/main-layout/timetable/groups/group
 import { TimetableTeachers } from './pages/main/main-layout/timetable/teachers/teachers';
 import { TimetableRooms } from './pages/main/main-layout/timetable/rooms/rooms';
 
+import { AdminPage } from './pages/main/main-layout/admin/admin';
+
 export const routes: Routes = [
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
 
@@ -32,6 +34,8 @@ export const routes: Routes = [
           { path: 'rooms', component: TimetableRooms },
         ],
       },
+      // Путь для админ-панели
+      { path: 'admin', component: AdminPage },
     ],
   },
 

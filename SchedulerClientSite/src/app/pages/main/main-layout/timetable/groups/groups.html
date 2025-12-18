@@ -1,15 +1,27 @@
 <div class="filters">
-  <select [(ngModel)]="selectedGroup" (change)="loadSchedule()">
-    <option value="">Выберите группу</option>
-    <option *ngFor="let g of groups" [value]="g">{{ g }}</option>
+  <select [(ngModel)]="selectedGroupName" (change)="loadSchedule()">
+    <option [ngValue]="null">Выберите группу</option>
+
+    <option *ngFor="let g of groups" [value]="g.name">
+      {{ g.name }}
+    </option>
   </select>
 
-  <input type="week" [(ngModel)]="selectedWeek" (change)="loadSchedule()" />
+  <input
+    type="week"
+    [(ngModel)]="selectedWeek"
+    (change)="loadSchedule()"
+  />
 </div>
 
 <div class="week-range" *ngIf="selectedWeek">
-  {{ weekInputToDate(selectedWeek) | date:'dd MMMM' }} – 
-  {{ (weekInputToDate(selectedWeek).getTime() + 6*24*60*60*1000) | date:'dd MMMM yyyy' }}
+  {{ weekInputToDate(selectedWeek) | date:'dd MMMM' }}
+  –
+  {{
+    (weekInputToDate(selectedWeek).getTime()
+      + 6 * 24 * 60 * 60 * 1000)
+      | date:'dd MMMM yyyy'
+  }}
 </div>
 
 <app-schedule-grid

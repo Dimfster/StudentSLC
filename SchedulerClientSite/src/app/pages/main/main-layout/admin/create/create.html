@@ -1,0 +1,28 @@
+<form class="create-form" (ngSubmit)="create()">
+
+  <input placeholder="Название" [(ngModel)]="model.name" name="name" required />
+
+  <input type="date" [(ngModel)]="model.date" name="date" required />
+  <input type="time" [(ngModel)]="model.start" name="start" required />
+  <input type="time" [(ngModel)]="model.end" name="end" required />
+
+  <label>Аудитория</label>
+  <select [(ngModel)]="model.roomName" name="roomName" required>
+    <option *ngFor="let r of rooms" [value]="r.name">{{ r.name }} ({{ r.type }})</option>
+  </select>
+
+  <label>Участник</label>
+  <select [(ngModel)]="model.participantId" name="participantId" required>
+    <option *ngFor="let s of students" [value]="s.userCode">{{ s.firstName }} {{ s.lastName }}</option>
+  </select>
+
+  <label>Преподаватель</label>
+  <select [(ngModel)]="model.keyHolderId" name="keyHolderId" required>
+    <option *ngFor="let t of teachers" [value]="t.userCode">{{ t.firstName }} {{ t.lastName }}</option>
+  </select>
+
+  <div *ngIf="errorMessage" style="color:red">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" style="color:green">{{ successMessage }}</div>
+
+  <button type="submit">➕ Создать</button>
+</form>

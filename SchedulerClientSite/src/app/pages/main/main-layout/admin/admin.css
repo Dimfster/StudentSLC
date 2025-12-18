@@ -1,0 +1,31 @@
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.admin-topbar {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-topbar button {
+  padding: 8px 16px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.admin-topbar button.active {
+  background: #1976d2;
+  color: white;
+}
+
+.admin-content {
+  flex-grow: 1;
+  padding: 16px;
+}

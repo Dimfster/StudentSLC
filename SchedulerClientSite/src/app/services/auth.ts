@@ -28,6 +28,15 @@ interface RegisterResponse {
   role: string;
 }
 
+export interface User {
+  userCode: number;
+  firstName: string;
+  lastName: string;
+  patronymic?: string;
+  role: string;
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,14 +45,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(data: LoginRequest): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(`${this.API_URL}/login`, data)
-      .pipe(
-        tap((response) => {
-          localStorage.setItem('token', response.token);
-        })
-      );
+  login(data: LoginRequest): Observable<LoginResponse & User> {
+    return this.http.post<LoginResponse & User>(
+      `${this.API_URL}/login`,
+      data
+    ).pipe(
+      tap(user => {
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('user', JSON.stringify(user));
+      })
+    );
   }
 
   register(data: RegisterRequest) {
@@ -53,8 +64,14 @@ export class AuthService {
     );
   }
 
+  getUser(): User | null {
+    const raw = localStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  }
+
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   getToken(): string | null {
