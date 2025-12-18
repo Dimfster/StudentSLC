@@ -16,7 +16,6 @@ namespace StudentSLC.Controllers
             _userService = userService;
         }
 
-        // POST: api/users
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDTO dto)
@@ -32,7 +31,6 @@ namespace StudentSLC.Controllers
             }
         }
 
-        // PATCH: api/users/{userCode}
         [Authorize(Roles = "admin")]
         [HttpPatch("{userCode}")]
         public async Task<IActionResult> UpdateUser(int userCode, [FromBody] UpdateUserDTO dto)
@@ -48,7 +46,6 @@ namespace StudentSLC.Controllers
             }
         }
 
-        // DELETE: api/users/{userCode}
         [Authorize(Roles = "admin")]
         [HttpDelete("{userCode}")]
         public async Task<IActionResult> DeleteUser(int userCode)
@@ -62,6 +59,22 @@ namespace StudentSLC.Controllers
             {
                 return NotFound(new { error = ex.Message });
             }
+        }
+
+        [Authorize]
+        [HttpGet("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsers();
+            return Ok(users);
+        }
+
+        [Authorize]
+        [HttpGet("GetAllTeachers")]
+        public async Task<IActionResult> GetAllTeachers()
+        {
+            var users = await _userService.GetAllTeachers();
+            return Ok(users);
         }
     }
 }

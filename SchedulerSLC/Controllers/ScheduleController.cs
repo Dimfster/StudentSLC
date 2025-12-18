@@ -16,14 +16,13 @@ namespace StudentSLC.Controllers
             _service = service;
         }
 
-        // GET: api/schedule/groups/{groupName}
         [Authorize(Roles = "student,teacher,keyholder,admin")]
         [HttpGet("groups/{groupName}")]
-        public async Task<IActionResult> GetGroupSchedule(string groupName)
+        public async Task<IActionResult> GetGroupSchedule(string groupName, [FromQuery] DateTime weekStart)
         {
             try
             {
-                var events = await _service.GetGroupSchedule(groupName);
+                var events = await _service.GetGroupSchedule(groupName, weekStart);
                 return Ok(events);
             }
             catch (KeyNotFoundException ex)
@@ -32,14 +31,13 @@ namespace StudentSLC.Controllers
             }
         }
 
-        // GET: api/schedule/keyholders/{userCode}
-        [Authorize(Roles = "keyholder, admin")]
+        [Authorize(Roles = "teacher, keyholder, admin")]
         [HttpGet("keyholders/{userCode}")]
-        public async Task<IActionResult> GetKeyHolderSchedule(int userCode)
+        public async Task<IActionResult> GetKeyHolderSchedule(int userCode, [FromQuery] DateTime weekStart)
         {
             try
             {
-                var events = await _service.GetKeyHolderSchedule(userCode);
+                var events = await _service.GetKeyHolderSchedule(userCode, weekStart);
                 return Ok(events);
             }
             catch (KeyNotFoundException ex)
@@ -48,14 +46,13 @@ namespace StudentSLC.Controllers
             }
         }
 
-        // GET: api/schedule/rooms/{roomName}
         [Authorize]
         [HttpGet("rooms/{roomName}")]
-        public async Task<IActionResult> GetRoomSchedule(string roomName)
+        public async Task<IActionResult> GetRoomSchedule(string roomName, [FromQuery] DateTime weekStart)
         {
             try
             {
-                var events = await _service.GetRoomSchedule(roomName);
+                var events = await _service.GetRoomSchedule(roomName, weekStart);
                 return Ok(events);
             }
             catch (KeyNotFoundException ex)

@@ -75,7 +75,9 @@ namespace StudentSLC.Services
                 UserCode = user.UserCode,
                 Role = user.Role,
                 Token = token,
-                ExpiresIn = 3600
+                ExpiresIn = 3600,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
         }
     }

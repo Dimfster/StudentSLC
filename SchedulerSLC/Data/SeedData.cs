@@ -46,8 +46,7 @@ public static class SeedData
 
         for (int i = 1; i <= 3; i++)
         {
-            users[i].Role = "teacher";   
-            users[i].Role = "keyholder";
+            users[i].Role = "keyholder";   
         }
 
         for (int i = 3; i < 20; i++)

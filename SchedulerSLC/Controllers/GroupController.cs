@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentSLC.DTOs;
-using StudentSLC.Models;
 using StudentSLC.Services;
 
 namespace StudentSLC.Controllers
@@ -17,7 +16,6 @@ namespace StudentSLC.Controllers
             _groupService = groupService;
         }
 
-        // POST: api/groups
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateGroup([FromBody] CreateGroupDTO dto)
@@ -33,7 +31,6 @@ namespace StudentSLC.Controllers
             }
         }
 
-        // PATCH: api/groups/{groupName}
         [Authorize(Roles = "admin")]
         [HttpPatch("{groupName}")]
         public async Task<IActionResult> UpdateGroup(string groupName, [FromBody] UpdateGroupDTO dto)
@@ -53,7 +50,6 @@ namespace StudentSLC.Controllers
             }
         }
 
-        // DELETE: api/groups/{groupName}
         [Authorize(Roles = "admin")]
         [HttpDelete("{groupName}")]
         public async Task<IActionResult> DeleteGroup(string groupName)
@@ -67,6 +63,14 @@ namespace StudentSLC.Controllers
             {
                 return NotFound(new { error = ex.Message });
             }
+        }
+
+        [Authorize]
+        [HttpGet("{GetAllGroups}")]
+        public async Task<IActionResult> GetAllGroups()
+        {
+            var groups = await _groupService.GetAllGroups();
+            return Ok(groups);
         }
     }
 }

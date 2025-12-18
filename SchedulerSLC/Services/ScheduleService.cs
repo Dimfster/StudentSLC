@@ -26,8 +26,7 @@ namespace StudentSLC.Services
             return StartOfWeek(date).AddDays(7).AddTicks(-1);
         }
 
-        // ---------- Расписание группы ----------
-        public async Task<List<ScheduleDTO>> GetGroupSchedule(string groupName)
+        public async Task<List<ScheduleDTO>> GetGroupSchedule(string groupName, DateTime weekStart)
         {
             var group = await _db.Groups
                 .Include(g => g.Users)
@@ -44,8 +43,8 @@ namespace StudentSLC.Services
             if (group == null)
                 throw new KeyNotFoundException($"Group '{groupName}' not found");
 
-            var start = StartOfWeek(DateTime.UtcNow);
-            var end = EndOfWeek(DateTime.UtcNow);
+            var start = StartOfWeek(weekStart);
+            var end = EndOfWeek(weekStart);
 
             return group.Users
                 .SelectMany(u => u.Participant.EventsAsParticipant)
@@ -63,8 +62,7 @@ namespace StudentSLC.Services
                 }).ToList();
         }
 
-        // ---------- Расписание держателя ключей ----------
-        public async Task<List<ScheduleDTO>> GetKeyHolderSchedule(int userCode)
+        public async Task<List<ScheduleDTO>> GetKeyHolderSchedule(int userCode, DateTime weekStart)
         {
             var participant = await _db.Participants
                 .Include(p => p.EventsAsKeyHolder)
@@ -78,8 +76,8 @@ namespace StudentSLC.Services
             if (participant == null || participant.User!.Role != "keyholder")
                 throw new KeyNotFoundException($"Keyholder with code {userCode} not found");
 
-            var start = StartOfWeek(DateTime.UtcNow);
-            var end = EndOfWeek(DateTime.UtcNow);
+            var start = StartOfWeek(weekStart);
+            var end = EndOfWeek(weekStart);
 
             return participant.EventsAsKeyHolder
                 .Where(e => e.StartTime >= start && e.StartTime <= end)
@@ -95,16 +93,14 @@ namespace StudentSLC.Services
                 }).ToList();
         }
 
-        // ---------- Расписание аудитории ----------
-        public async Task<List<ScheduleDTO>> GetRoomSchedule(string roomName)
+        public async Task<List<ScheduleDTO>> GetRoomSchedule(string roomName, DateTime weekStart)
         {
             var room = await _db.Rooms
                 .FirstOrDefaultAsync(r => r.Name == roomName)
                 ?? throw new KeyNotFoundException($"Room with name {roomName} not found");
 
-    
-            var start = StartOfWeek(DateTime.UtcNow);
-            var end = EndOfWeek(DateTime.UtcNow);
+            var start = DateTime.SpecifyKind(StartOfWeek(weekStart), DateTimeKind.Utc);
+            var end = DateTime.SpecifyKind(EndOfWeek(weekStart), DateTimeKind.Utc);
 
             var events = await _db.Events
                 .Include(e => e.Room)

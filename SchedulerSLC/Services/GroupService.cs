@@ -14,7 +14,6 @@ namespace StudentSLC.Services
             _db = db;
         }
 
-        // ---------- CREATE ----------
         public async Task<GroupResponse> CreateGroup(CreateGroupDTO dto)
         {
             if (await _db.Groups.AnyAsync(g => g.Name == dto.Name))
@@ -38,17 +37,15 @@ namespace StudentSLC.Services
             };
         }
 
-        // ---------- UPDATE ----------
         public async Task<GroupResponse> UpdateGroup(string groupName, UpdateGroupDTO dto)
         {
             var group = await _db.Groups
-            .AsNoTracking()
-            .FirstOrDefaultAsync(g => g.Name == groupName) 
+                .AsNoTracking()
+                .FirstOrDefaultAsync(g => g.Name == groupName)
                 ?? throw new KeyNotFoundException($"Group '{groupName}' not found");
 
             if (!string.IsNullOrWhiteSpace(dto.Name))
             {
-                // Проверка на уникальность
                 if (await _db.Groups.AnyAsync(g => g.Name == dto.Name))
                     throw new Exception($"Group '{dto.Name}' already exists");
 
@@ -56,8 +53,8 @@ namespace StudentSLC.Services
             }
 
             _db.Groups.Update(group);
-
             await _db.SaveChangesAsync();
+
             return new GroupResponse
             {
                 Id = group.Id,
@@ -65,7 +62,6 @@ namespace StudentSLC.Services
             };
         }
 
-        // ---------- DELETE ----------
         public async Task DeleteGroup(string groupName)
         {
             var group = await _db.Groups
@@ -82,6 +78,17 @@ namespace StudentSLC.Services
 
             _db.Groups.Remove(group);
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<GroupResponse>> GetAllGroups()
+        {
+            return await _db.Groups
+                .Select(g => new GroupResponse
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .ToListAsync();
         }
     }
 }

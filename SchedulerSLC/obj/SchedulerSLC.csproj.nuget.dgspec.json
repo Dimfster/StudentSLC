@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2/SchedulerSLC/SchedulerSLC.csproj": {}
+    "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2 + 3/SchedulerSLC/SchedulerSLC.csproj": {}
   },
   "projects": {
-    "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2/SchedulerSLC/SchedulerSLC.csproj": {
+    "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2 + 3/SchedulerSLC/SchedulerSLC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2/SchedulerSLC/SchedulerSLC.csproj",
+        "projectUniqueName": "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2 + 3/SchedulerSLC/SchedulerSLC.csproj",
         "projectName": "SchedulerSLC",
-        "projectPath": "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2/SchedulerSLC/SchedulerSLC.csproj",
+        "projectPath": "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2 + 3/SchedulerSLC/SchedulerSLC.csproj",
         "packagesPath": "/Users/user/.nuget/packages/",
-        "outputPath": "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2/SchedulerSLC/obj/",
+        "outputPath": "/Users/user/Documents/Зимин Дмитрий/7 семестр/Технологии кроссплатформенной разработки/Лаба №2 + 3/SchedulerSLC/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/user/.nuget/NuGet/NuGet.Config"

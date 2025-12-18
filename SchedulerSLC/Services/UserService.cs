@@ -10,7 +10,7 @@ namespace StudentSLC.Services
     {
         private readonly AppDbContext _db;
         private readonly PasswordHasher _passwordHasher;
-         private readonly CodeGenerator _codeGenerator;
+        private readonly CodeGenerator _codeGenerator;
 
         public UserService(AppDbContext db, PasswordHasher passwordHasher, CodeGenerator codeGenerator)
         {
@@ -21,8 +21,7 @@ namespace StudentSLC.Services
 
         public async Task<UserResponse> CreateUser(CreateUserDTO dto)
         {
-            // Проверка роли
-            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Name == dto.Role) 
+            var role = await _db.Roles.FirstOrDefaultAsync(r => r.Name == dto.Role)
                 ?? throw new KeyNotFoundException($"Role '{dto.Role}' not found");
 
             var participant = new Participant
@@ -41,8 +40,9 @@ namespace StudentSLC.Services
                 Participant = participant
             };
 
-            var entry = _db.Users.Add(user);
+            _db.Users.Add(user);
             await _db.SaveChangesAsync();
+
             return new UserResponse
             {
                 UserCode = user.UserCode,
@@ -52,19 +52,19 @@ namespace StudentSLC.Services
                 Role = user.Role
             };
         }
+
         public async Task<UserResponse> UpdateUser(int userCode, UpdateUserDTO dto)
         {
             var user = await _db.Users
                 .Include(u => u.Participant)
-                .FirstOrDefaultAsync(u => u.UserCode == userCode) 
+                .Include(u => u.Groups)
+                .FirstOrDefaultAsync(u => u.UserCode == userCode)
                 ?? throw new KeyNotFoundException($"User with code {userCode} not found");
 
-            // Проверяем роль
             var role = await _db.Roles.FirstOrDefaultAsync(r => r.Name == dto.Role);
             if (role == null)
                 throw new KeyNotFoundException($"Role '{dto.Role}' not found");
 
-            // Обновляем данные
             if (!string.IsNullOrWhiteSpace(dto.FirstName))
                 user.FirstName = dto.FirstName;
             if (!string.IsNullOrWhiteSpace(dto.LastName))
@@ -93,6 +93,7 @@ namespace StudentSLC.Services
 
             _db.Users.Update(user);
             await _db.SaveChangesAsync();
+
             return new UserResponse
             {
                 UserCode = user.UserCode,
@@ -102,6 +103,7 @@ namespace StudentSLC.Services
                 Role = user.Role
             };
         }
+
         public async Task DeleteUser(int userCode)
         {
             var user = await _db.Users
@@ -118,8 +120,36 @@ namespace StudentSLC.Services
                 _db.Participants.Remove(user.Participant);
 
             _db.Users.Remove(user);
-
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<UserResponse>> GetAllUsers()
+        {
+            return await _db.Users
+                .Select(u => new UserResponse
+                {
+                    UserCode = u.UserCode,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Patronymic = u.Patronymic,
+                    Role = u.Role
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<UserResponse>> GetAllTeachers()
+        {
+            return await _db.Users
+                .Where(u => u.Role == "keyholder")
+                .Select(u => new UserResponse
+                {
+                    UserCode = u.UserCode,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Patronymic = u.Patronymic,
+                    Role = u.Role
+                })
+                .ToListAsync();
         }
     }
 }

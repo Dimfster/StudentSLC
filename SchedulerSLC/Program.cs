@@ -16,6 +16,7 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOpti
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<GroupService>();
 builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<ScheduleService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtProvider>();
@@ -47,6 +48,15 @@ if (app.Environment.IsDevelopment())
         options.DocumentPath = "/openapi/v1.json";
     });
 }
+
+app.UseCors(policy =>
+{
+    policy
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+});
+
 
 app.UseHttpsRedirection();
 

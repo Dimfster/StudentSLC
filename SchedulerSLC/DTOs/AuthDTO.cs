@@ -27,5 +27,8 @@ namespace StudentSLC.DTOs
         public required string Role { get; set; }
         public required string Token { get; set; }
         public int ExpiresIn { get; set; }
+
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
     }
 }
